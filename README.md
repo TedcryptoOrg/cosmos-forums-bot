@@ -34,3 +34,9 @@ ts-node src/index.ts
 It basically reads from a specific forum/endpoint and adds the last topics to a database
 and keep checking for newer topics. If it finds a new topic, it will send a message to 
 a specific channel, currently only telegram.
+
+![img.png](docs/image/bot_logs.png)
+(Bot logs)
+
+![img.png](docs/image/telegram_example.png)
+(Bot running on telegram)
