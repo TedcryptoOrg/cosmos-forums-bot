@@ -1,4 +1,4 @@
-export interface Article {
+export type Article = {
     title: string;
     url: string;
 }
