@@ -1,22 +1,40 @@
 import * as dotenv from 'dotenv';
 import {Message} from "./types/Message";
 import {Recipient} from "./types/Recipient";
+import TelegramProvider from "./notifier/provider/TelegramProvider";
+import {TelegramClient} from "./clients/TelegramClient";
+import {Notifier} from "./notifier/Notifier";
 
 const path = require('path')
 
 dotenv.config({debug: true, path: path.resolve(__dirname, '../.env')});
 
 const database = require('./Database').database;
-const notifier = require('./notifier/Notifier').notifier;
 
 const providers = [
     require('./forum/provider/CosmosForum').cosmosForum
 ]
 
+let notifier: Notifier;
+
 const main = async () => {
     await database.connect();
     await database.initializeDB();
     console.log('Initialized database.');
+
+    // Start clients
+    let providers = [];
+    const telegramToken = String(process.env.TELEGRAM_BOT_TOKEN)
+    if ("" !== telegramToken) {
+        console.log('Starting telegram client...');
+        const telegramClient = new TelegramClient(telegramToken);
+        await telegramClient.start();
+
+        providers.push(new TelegramProvider(telegramClient))
+    }
+
+    // Start the notifier
+    notifier = new Notifier(providers);
 }
 
 Promise.all([main()])
@@ -44,6 +62,7 @@ Promise.all([main()])
                                         channel_id: user.channel_id
                                     }
                                 }
+
                                 await notifier.notify(message, recipient);
                             }
                         } else {

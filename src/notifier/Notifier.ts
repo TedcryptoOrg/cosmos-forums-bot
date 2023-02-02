@@ -1,13 +1,12 @@
 import {Message} from "../types/Message";
 import {Recipient} from "../types/Recipient";
-import TelegramProvider from "./provider/TelegramProvider";
 import {NotifierProviderInterface} from "./NotifierProviderInterface";
 
-class Notifier {
-    private providers: NotifierProviderInterface[] = [];
+export class Notifier {
+    private readonly providers: NotifierProviderInterface[] = [];
 
-    constructor() {
-        this.providers.push(new TelegramProvider());
+    constructor(providers: NotifierProviderInterface[] = []) {
+        this.providers = providers;
     }
 
     async notify(message: Message, recipient: Recipient) {
@@ -16,5 +15,3 @@ class Notifier {
         }
     }
 }
-
-export const notifier = new Notifier();
