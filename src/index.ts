@@ -4,6 +4,8 @@ import {Recipient} from "./types/Recipient";
 import TelegramProvider from "./notifier/provider/TelegramProvider";
 import {TelegramClient} from "./clients/TelegramClient";
 import {Notifier} from "./notifier/Notifier";
+import {DiscordClient} from "./clients/DiscordClient";
+import DiscordProvider from "./notifier/provider/DiscordProvider";
 
 const path = require('path')
 
@@ -24,6 +26,8 @@ const main = async () => {
 
     // Start clients
     let providers = [];
+
+    // Telegram
     const telegramToken = String(process.env.TELEGRAM_BOT_TOKEN)
     if ("" !== telegramToken) {
         console.log('Starting telegram client...');
@@ -31,6 +35,17 @@ const main = async () => {
         await telegramClient.start();
 
         providers.push(new TelegramProvider(telegramClient))
+    }
+
+    // Discord
+    const discordBotToken = String(process.env.DISCORD_BOT_TOKEN)
+    const discordClientId = String(process.env.DISCORD_CLIENT_ID);
+    if ("" !== discordBotToken && "" !== discordClientId) {
+        console.log('Starting discord client...');
+        const discordClient = new DiscordClient(discordClientId, discordBotToken);
+        await discordClient.start();
+
+        providers.push(new DiscordProvider(discordClient))
     }
 
     // Start the notifier
@@ -49,22 +64,15 @@ Promise.all([main()])
                         if (!dbArticle) {
                             console.log('Topic "'+article.title+'" does not exist. Adding...')
                             await database.insertArticle(article.title, article.url);
-                            const users = await database.getAllUsers();
-                            for (const user of users) {
-                                const message: Message = {
-                                    text: `**New ${provider.getName()} topic**\n\n`+
-                                        `Title: ${article.title}\n`+
-                                        `URL: ${article.url}`,
-                                }
-                                const recipient: Recipient = {
-                                    id: user.id,
-                                    options: {
-                                        channel_id: user.channel_id
-                                    }
-                                }
-
-                                await notifier.notify(message, recipient);
+                            const message: Message = {
+                                text: `**New ${provider.getName()} topic**\n\n`+
+                                    `Title: ${article.title}\n`+
+                                    `URL: ${article.url}`,
                             }
+
+                            await notifier.notify(message);
+
+
                         } else {
                             console.log('Topic "'+article.title+'" already exists. Skipping...')
                         }

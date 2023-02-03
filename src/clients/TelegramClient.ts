@@ -1,6 +1,7 @@
 import {ClientInterface} from "./ClientInterface";
 import {Telegraf} from "telegraf";
 import {database} from "../Database";
+import {Platforms} from "../enums/Platforms";
 
 export class TelegramClient implements ClientInterface {
     private bot: Telegraf;
@@ -17,13 +18,13 @@ export class TelegramClient implements ClientInterface {
             const channelId = ctx.message.chat.id;
             if (!userId || !channelId) return;
 
-            const user = await database.getUser(userId.toString());
-            if (user) {
-                ctx.reply('User already exists.');
+            const notificationChannel = await database.getNotificationChannel(channelId.toString(), this.getName())
+            if (notificationChannel) {
+                ctx.reply('Notification channel already exists.');
                 return;
             } else {
-                await database.createUser(userId.toString(), channelId.toString());
-                ctx.reply(`Saved user ID: ${userId} and channel ID: ${channelId}.`);
+                await database.createNotificationChannel(userId.toString(), channelId.toString(), this.getName());
+                ctx.reply(`Notification channel created! User Id: ${userId}, Channel ID: ${channelId}, Platform: ${this.getName()}.`);
             }
         });
 
@@ -39,5 +40,9 @@ export class TelegramClient implements ClientInterface {
 
     async sendMessage(chatId: string, message: string): Promise<void> {
         await this.bot.telegram.sendMessage(chatId, message);
+    }
+
+    getName(): Platforms {
+        return Platforms.Telegram;
     }
 }

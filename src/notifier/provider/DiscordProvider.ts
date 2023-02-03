@@ -1,13 +1,13 @@
 import {NotifierProviderInterface} from "../NotifierProviderInterface";
 import {Recipient} from "../../types/Recipient";
 import {Message} from "../../types/Message";
-import {TelegramClient} from "../../clients/TelegramClient";
+import {DiscordClient} from "../../clients/DiscordClient";
 import {Platforms} from "../../enums/Platforms";
 
-export default class TelegramProvider implements NotifierProviderInterface {
-  private readonly bot: TelegramClient;
+export default class DiscordProvider implements NotifierProviderInterface {
+  private readonly bot: DiscordClient;
 
-  constructor(bot: TelegramClient) {
+  constructor(bot: DiscordClient) {
     this.bot = bot;
   }
 
@@ -16,6 +16,6 @@ export default class TelegramProvider implements NotifierProviderInterface {
   }
 
   getClientName(): Platforms {
-    return Platforms.Telegram;
+    return Platforms.Discord;
   }
 }

@@ -1,5 +1,6 @@
 import * as sqlite3 from 'sqlite3'
 import { open } from 'sqlite'
+import {channel} from "diagnostics_channel";
 
 class Database {
     private connection: any;
@@ -20,10 +21,11 @@ class Database {
             );`
         )
         this.connection.exec(
-            `CREATE TABLE IF NOT EXISTS users (
+            `CREATE TABLE IF NOT EXISTS notification_channel (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 user_id VARCHAR(255) NOT NULL,
-                channel_id VARCHAR(255) NOT NULL
+                channel_id VARCHAR(255) NOT NULL,
+                platform VARCHAR(255) NOT NULL
             );`
         )
     }
@@ -42,22 +44,22 @@ class Database {
         );
     }
 
-    async getUser(user_id: string): Promise<any> {
+    async getNotificationChannel(channel_id: string, platform: string): Promise<any> {
         return this.connection.get(
-            `SELECT * FROM users WHERE user_id = ?`,
-            [user_id]
+            `SELECT * FROM notification_channel WHERE channel_id = ? AND platform = ?`,
+            [channel_id, platform]
         );
     }
 
-    async createUser(user_id: string, channel_id: string) {
+    async createNotificationChannel(user_id: string, channel_id: string, platform: string) {
         this.connection.run(
-            `INSERT INTO users (user_id, channel_id) VALUES (?, ?)`,
-            [user_id, channel_id]
+            `INSERT INTO notification_channel (user_id, channel_id, platform) VALUES (?, ?, ?)`,
+            [user_id, channel_id, platform]
         );
     }
 
-    async getAllUsers() {
-        return this.connection.all(`SELECT * FROM users`);
+    async getAllNotificationChannels() {
+        return this.connection.all(`SELECT * FROM notification_channel`);
     }
 }
 
