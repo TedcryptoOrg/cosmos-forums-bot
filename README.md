@@ -2,6 +2,9 @@
 
 This is a bot that will help you to track forum proposals
 
+Discord bot: https://discord.com/api/oauth2/authorize?client_id=1070792565990895737&permissions=277025458240&scope=bot
+Telegram bot: https://t.me/CosmosForumBot
+
 ## How to use
 
 ### Initial setup
@@ -40,3 +43,6 @@ a specific channel, currently only telegram.
 
 ![img.png](docs/image/telegram_example.png)
 (Bot running on telegram)
+
+![img.png](docs/image/discord_example.png)
+(Bot running on discord)

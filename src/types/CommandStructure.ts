@@ -4,6 +4,6 @@ export type CommandStructure = {
     command: string,
     arguments: string[],
     platform: Platforms,
-    channelId: string|null|void,
-    userId: string|null|void,
+    channelId?: string|null|void,
+    userId?: string|null|void,
 }

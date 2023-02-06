@@ -1,35 +1,49 @@
 import {ClientInterface} from "./ClientInterface";
 import {Telegraf} from "telegraf";
-import {database} from "../Database";
 import {Platforms} from "../enums/Platforms";
+import {Start} from "../command/Start";
+import {CommandStructure} from "../types/CommandStructure";
+import {Commands} from "../types/Commands";
 
 export class TelegramClient implements ClientInterface {
     private bot: Telegraf;
+    private readonly commands: Commands;
 
     constructor(botToken: string) {
         this.bot = new Telegraf(botToken);
+        this.commands = {
+            'start': new Start(),
+        }
     }
 
     async start(): Promise<void> {
-        this.bot.start(async (ctx) => {
-            ctx.reply('Hello ' + ctx.from.first_name + '!');
-            if (!ctx.message) return;
-            const userId = ctx.message.from?.id;
-            const channelId = ctx.message.chat.id;
-            if (!userId || !channelId) return;
+        Object.keys(this.commands).forEach(commandName => {
+            this.bot.command(commandName, async (ctx) => {
+                console.log('Running command ' + commandName);
+                const command = this.commands[commandName];
+                if (!command) {
+                    console.log('Command not found!');
+                    return;
+                }
 
-            const notificationChannel = await database.getNotificationChannel(channelId.toString(), this.getName())
-            if (notificationChannel) {
-                ctx.reply('Notification channel already exists.');
-                return;
-            } else {
-                await database.createNotificationChannel(userId.toString(), channelId.toString(), this.getName());
-                ctx.reply(`Notification channel created! User Id: ${userId}, Channel ID: ${channelId}, Platform: ${this.getName()}.`);
-            }
+                const messageArguments = ctx.update.message.text.split(' ');
+                // Remove command name
+                messageArguments.shift();
+                const commandStructure:CommandStructure = {
+                    command: commandName,
+                    arguments: messageArguments,
+                    platform: Platforms.Telegram,
+                    channelId: String(ctx.message.chat.id),
+                    userId: String(ctx.message.from?.id),
+                };
+
+                const result = await command.run(commandStructure);
+                ctx.reply(result.message, {reply_to_message_id : ctx.update.message.message_id});
+            })
         });
 
         this.bot.help((ctx) => {
-            ctx.reply('Send /start to receive a greeting');
+            ctx.reply('Use the command /start with forum provider (cosmos-forum or commonwealth) and the community name to start receiving notifications.')
         });
 
         this.bot.launch();

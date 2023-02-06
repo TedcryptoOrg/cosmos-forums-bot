@@ -15,7 +15,8 @@ export class Notifier {
 
     async notify(message: Message)
     {
-        const users = await database.getAllNotificationChannels();
+        const users = await database.getAllNotificationChannelsForProviderAndCommunity(message.provider, message.community);
+        console.log(`[Notifier] Sending message to ${users.length} users.`)
         for (const user of users) {
             const recipient: Recipient = {
                 id: user.id,
