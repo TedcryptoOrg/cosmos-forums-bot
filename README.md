@@ -1,4 +1,4 @@
-# CosmosForum Forum Bot
+# Cosmos Forum(s) Bot
 
 This is a bot that will help you to track forum proposals
 
