@@ -47,9 +47,6 @@ export class TelegramClient implements ClientInterface {
         });
 
         this.bot.launch();
-
-        process.once('SIGINT', () => this.bot.stop('SIGINT'));
-        process.once('SIGTERM', () => this.bot.stop('SIGTERM'));
     }
 
     async sendMessage(chatId: string, message: string): Promise<void> {
