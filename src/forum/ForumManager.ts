@@ -1,6 +1,7 @@
 import {CommonWealth} from "./provider/CommonWealth";
 import {CosmosForum} from "./provider/CosmosForum";
 import {ForumProvider} from "./provider/ForumProvider";
+import {MarsForum} from "./provider/MarsForum";
 
 class ForumManager {
     private providers: {
@@ -11,6 +12,7 @@ class ForumManager {
         let providers = [
             new CommonWealth(),
             new CosmosForum(),
+            new MarsForum(),
         ]
 
         this.providers = {};
