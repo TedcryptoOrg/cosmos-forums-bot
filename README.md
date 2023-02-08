@@ -46,3 +46,11 @@ a specific channel, currently only telegram.
 
 ![img.png](docs/image/discord_example.png)
 (Bot running on discord)
+
+## Current forums
+
+| Forum        | Communities                    |
+|--------------|--------------------------------|
+| cosmos-forum | cosmos                         |
+| mars-forum   | mars                           |
+| commonwealth | osmosis, stargaze, juno, evmos |
