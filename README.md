@@ -49,8 +49,8 @@ a specific channel, currently only telegram.
 
 ## Current forums
 
-| Forum        | Communities                    |
-|--------------|--------------------------------|
-| cosmos-forum | cosmos                         |
-| mars-forum   | mars                           |
-| commonwealth | osmosis, stargaze, juno, evmos |
+| Forum        | Communities                                              |
+|--------------|----------------------------------------------------------|
+| cosmos-forum | cosmos                                                   |
+| mars-forum   | mars                                                     |
+| commonwealth | osmosis, stargaze, juno, evmos, chihuahua, bitsong-forum |

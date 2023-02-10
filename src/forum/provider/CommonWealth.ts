@@ -72,6 +72,8 @@ export class CommonWealth implements ForumProvider {
         'stargaze',
         'juno',
         'evmos',
+        'chihuahua',
+        'bitsong-forum',
     ];
     private lastThreads: { [key: string]: number } = {};
 
