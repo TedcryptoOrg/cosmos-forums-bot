@@ -11,6 +11,8 @@ class ForumManager {
     constructor() {
         let providers = [
             new CommonWealth(),
+            new CosmosForum(),
+            new MarsForum(),
         ]
 
         this.providers = {};
