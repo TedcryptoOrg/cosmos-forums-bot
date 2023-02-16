@@ -1,6 +1,5 @@
 import * as sqlite3 from 'sqlite3'
 import { open } from 'sqlite'
-import {channel} from "diagnostics_channel";
 
 class Database {
     private connection: any;
@@ -30,6 +29,17 @@ class Database {
                 platform VARCHAR(255) NOT NULL,
                 provider VARCHAR(255) NOT NULL,
                 community VARCHAR(255) NOT NULL
+            );`
+        )
+        this.connection.exec(
+            `CREATE TABLE IF NOT EXISTS twitter_clients (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                name VARCHAR(255) NOT NULL,
+                consumer_key VARCHAR(255) NOT NULL,
+                consumer_secret VARCHAR(255) NOT NULL,
+                access_token VARCHAR(255) NOT NULL,
+                access_token_secret VARCHAR(255) NOT NULL,
+                bearer_token VARCHAR(255) NOT NULL
             );`
         )
     }
@@ -62,8 +72,8 @@ class Database {
         );
     }
 
-    async getAllNotificationChannels() {
-        return this.connection.all(`SELECT * FROM notification_channel`);
+    async getAllTwitterClients() {
+        return this.connection.all(`SELECT * FROM twitter_clients`);
     }
 
     async getAllNotificationChannelsForProviderAndCommunity(provider: string, community: string) {
