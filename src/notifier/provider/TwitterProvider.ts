@@ -14,7 +14,7 @@ export default class TwitterProvider implements NotifierProviderInterface {
   }
 
   async send(message: Message, recipient: Recipient): Promise<void> {
-    if (recipient.options['channel_id'] !== this.twitterClientId) {
+    if (recipient.options['channel_id'].toString() !== this.twitterClientId.toString()) {
         console.log(`[TwitterProvider] Skipping message for user ${recipient.id} because it is not for the configured client.`);
         return;
     }

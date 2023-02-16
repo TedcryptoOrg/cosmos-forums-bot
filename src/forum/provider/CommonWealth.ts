@@ -69,11 +69,6 @@ export class CommonWealth implements ForumProvider {
     private readonly restToken: string|null;
     private readonly communities = [
         'osmosis',
-        'stargaze',
-        'juno',
-        'evmos',
-        'chihuahua',
-        'bitsong-forum',
     ];
     private lastThreads: { [key: string]: number } = {};
 

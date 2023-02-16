@@ -21,9 +21,13 @@ export class TwitterClient implements ClientInterface {
     }
 
     async sendMessage(option: any, text: string) {
-        await this.client.tweets.create({
-            text: text
-        });
+        try {
+            await this.client.tweets.create({
+                text: text
+            });
+        } catch (e) {
+            console.error(e);
+        }
     }
 
     getName(): Platforms {
