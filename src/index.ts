@@ -5,6 +5,8 @@ import {TelegramClient} from "./clients/TelegramClient";
 import {Notifier} from "./notifier/Notifier";
 import {DiscordClient} from "./clients/DiscordClient";
 import DiscordProvider from "./notifier/provider/DiscordProvider";
+import {TwitterClient} from "./clients/TwitterClient";
+import TwitterProvider from "./notifier/provider/TwitterProvider";
 
 const path = require('path')
 
@@ -24,8 +26,8 @@ const main = async () => {
     let notifierClients = [];
 
     // Telegram
-    const telegramToken = String(process.env.TELEGRAM_BOT_TOKEN)
-    if ("" !== telegramToken) {
+    const telegramToken = process.env.TELEGRAM_BOT_TOKEN ?? undefined;
+    if (telegramToken) {
         console.log('Starting telegram client...');
         const telegramClient = new TelegramClient(telegramToken);
         await telegramClient.start();
@@ -34,14 +36,32 @@ const main = async () => {
     }
 
     // Discord
-    const discordBotToken = String(process.env.DISCORD_BOT_TOKEN)
-    const discordClientId = String(process.env.DISCORD_CLIENT_ID);
-    if ("" !== discordBotToken && "" !== discordClientId) {
+    const discordBotToken = process.env.DISCORD_BOT_TOKEN ?? undefined
+    const discordClientId = process.env.DISCORD_CLIENT_ID ?? undefined;
+    if (discordBotToken && discordClientId) {
         console.log('Starting discord client...');
         const discordClient = new DiscordClient(discordClientId, discordBotToken);
         await discordClient.start();
 
         notifierClients.push(new DiscordProvider(discordClient))
+    }
+
+    // Twitter
+    const twitterClients = await database.getAllTwitterClients();
+    if (twitterClients.length) {
+        for (const configuration of twitterClients) {
+            console.log('Starting "' + configuration.name + '" twitter client...');
+            const twitterClient = new TwitterClient({
+                consumerKey: configuration.consumer_key,
+                consumerSecret: configuration.consumer_secret,
+                accessToken: configuration.access_token,
+                accessTokenSecret: configuration.access_token_secret,
+                bearerToken: configuration.bearer_token
+            });
+            await twitterClient.start();
+
+            notifierClients.push(new TwitterProvider(twitterClient, configuration.id))
+        }
     }
 
     // Start the notifier

@@ -9,12 +9,23 @@ export class Notifier {
     constructor(providers: NotifierProviderInterface[] = []) {
         this.providers = {};
         for (const provider of providers) {
-            this.providers[provider.getClientName()] = provider;
+            if (!this.providers.hasOwnProperty(provider.getClientName())) {
+                this.providers[provider.getClientName()] = [];
+            }
+
+            this.providers[provider.getClientName()].push(provider);
         }
     }
 
     async notify(message: Message)
     {
+
+        if (Object.keys(this.providers).length === 0) {
+            console.log('[Notifier] No providers configured. Skipping notification.');
+            return;
+        }
+
+        // Send to all users
         const users = await database.getAllNotificationChannelsForProviderAndCommunity(message.provider, message.community);
         console.log(`[Notifier] Sending message to ${users.length} users.`)
         for (const user of users) {
@@ -24,8 +35,14 @@ export class Notifier {
                     channel_id: user.channel_id
                 }
             }
+            if (!this.providers.hasOwnProperty(user.platform)) {
+                console.log('[Notifier] No provider configured for platform "'+user.platform+'". Skipping notification.');
+                continue;
+            }
 
-            await this.providers[user.platform].send(message, recipient);
+            for (const provider of this.providers[user.platform]) {
+                await provider.send(message, recipient);
+            }
         }
     }
 }

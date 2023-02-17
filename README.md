@@ -5,6 +5,7 @@ This is a bot that will help you track forum proposals. You can use our own self
 Discord bot: https://discord.com/api/oauth2/authorize?client_id=1070792565990895737&permissions=277025458240&scope=bot
 
 Telegram bot: https://t.me/CosmosForumBot
+Twitter bot: https://twitter.com/tedcryptoBot
 
 ## How it works
 
