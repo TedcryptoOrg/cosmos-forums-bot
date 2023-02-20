@@ -14,17 +14,17 @@ describe('MarsForum', () => {
             {
                 title: 'Test Article 1',
                 link: 'https://test.com/article1',
-                category: ['MRC'],
+                category: 'MRC',
             },
             {
                 title: 'Test Article 2',
                 link: 'https://test.com/article2',
-                category: ['MRC'],
+                category: 'MRC',
             },
             {
                 title: 'Test Article 3',
                 link: 'https://test.com/article3',
-                category: ['Other'],
+                category: 'Other',
             },
         ],
     };
