@@ -26,7 +26,15 @@ export class MarsForum implements ForumProvider {
 
         this.currentHash = feedHash;
         let articles: Article[] = [];
+        if (!feed.hasOwnProperty('items')) {
+            console.log('[Mars Forum] No articles found.');
+            return [];
+        }
+
         for (const item of feed.items) {
+            if (!item.category.includes('MRC')) {
+                continue;
+            }
             articles.push({
                 title: item.title,
                 url: item.link,
