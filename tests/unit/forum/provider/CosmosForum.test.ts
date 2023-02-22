@@ -1,5 +1,6 @@
+import {CosmosForum} from "../../../../src/forum/provider/CosmosForum";
+
 const nock = require("nock");
-const cosmosForum = require("../../../src/forum/provider/CosmosForum").cosmosForum;
 
 describe("Cosmos", () => {
     describe("getArticles", () => {
@@ -25,16 +26,21 @@ describe("Cosmos", () => {
                 .get("/latest.rss")
                 .reply(200, exampleResponse);
 
+            const cosmosForum = new CosmosForum();
             const articles = await cosmosForum.getArticles();
 
             expect(articles).toEqual([
                 {
                     title: "First article",
-                    url: "https://forum.cosmos.network/first"
+                    url: "https://forum.cosmos.network/first",
+                    community: 'cosmos',
+                    provider: 'cosmos-forum',
                 },
                 {
                     title: "Second article",
-                    url: "https://forum.cosmos.network/second"
+                    url: "https://forum.cosmos.network/second",
+                    community: 'cosmos',
+                    provider: 'cosmos-forum',
                 }
             ]);
         });
