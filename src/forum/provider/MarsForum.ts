@@ -32,7 +32,8 @@ export class MarsForum implements ForumProvider {
         }
 
         for (const item of feed.items) {
-            if (!item.category.includes('MRC')) {
+            if (!item.categories.find((str: string) => str.includes('MRC'))) {
+                console.debug('[Mars Forum] Skipping article: ' + item.title + ' with categories: ' + item.categories.join(', '));
                 continue;
             }
             articles.push({
