@@ -26,8 +26,9 @@ const main = async () => {
     let notifierClients = [];
 
     // Telegram
+    const telegramEnabled = process.env.TELEGRAM_ENABLED ?? undefined;
     const telegramToken = process.env.TELEGRAM_BOT_TOKEN ?? undefined;
-    if (telegramToken) {
+    if (telegramEnabled === "true" && telegramToken) {
         console.log('Starting telegram client...');
         const telegramClient = new TelegramClient(telegramToken);
         await telegramClient.start();
@@ -36,9 +37,10 @@ const main = async () => {
     }
 
     // Discord
+    const discordEnabled = process.env.DISCORD_ENABLED ?? undefined;
     const discordBotToken = process.env.DISCORD_BOT_TOKEN ?? undefined
     const discordClientId = process.env.DISCORD_CLIENT_ID ?? undefined;
-    if (discordBotToken && discordClientId) {
+    if (discordEnabled === "true" && discordBotToken && discordClientId) {
         console.log('Starting discord client...');
         const discordClient = new DiscordClient(discordClientId, discordBotToken);
         await discordClient.start();
@@ -47,8 +49,9 @@ const main = async () => {
     }
 
     // Twitter
+    const twitterEnabled = process.env.TWITTER_ENABLED ?? undefined;
     const twitterClients = await database.getAllTwitterClients();
-    if (twitterClients.length) {
+    if (twitterEnabled === "true" && twitterClients.length) {
         for (const configuration of twitterClients) {
             console.log('Starting "' + configuration.name + '" twitter client...');
             const twitterClient = new TwitterClient({
