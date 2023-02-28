@@ -19,7 +19,6 @@ export class Notifier {
 
     async notify(message: Message)
     {
-
         if (Object.keys(this.providers).length === 0) {
             console.log('[Notifier] No providers configured. Skipping notification.');
             return;
@@ -41,7 +40,11 @@ export class Notifier {
             }
 
             for (const provider of this.providers[user.platform]) {
-                await provider.send(message, recipient);
+                try {
+                    await provider.send(message, recipient);
+                } catch (error) {
+                    console.error(error);
+                }
             }
         }
     }
