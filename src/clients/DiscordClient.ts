@@ -58,7 +58,7 @@ export class DiscordClient implements ClientInterface {
                 command: interaction.commandName,
                 arguments: commandArguments,
                 platform: this.getName(),
-                channelId: interaction.channelId,
+                channelId: interaction.guildId+"|"+interaction.channelId,
                 userId: interaction.user.id,
             };
             try {
@@ -77,8 +77,15 @@ export class DiscordClient implements ClientInterface {
         await this.client.login(this.botToken);
     }
 
-    async sendMessage(channelId: string, message: string) {
-        const channel = this.client.channels.cache.get(channelId);
+    async sendMessage(discordChannelId: string, message: string) {
+        // get the guild and the channel id from discordChannelId
+        const [guildId, channelId] = discordChannelId.split('|');
+        const guild = this.client.guilds.cache.get(guildId);
+        if (!guild) {
+            console.error('Guild '+guildId+' not found!')
+            return;
+        }
+        const channel = guild.channels.cache.get(channelId);
         if (!channel) {
             console.error('Channel '+channelId+' not found!')
             return;
