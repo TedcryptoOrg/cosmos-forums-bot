@@ -1,7 +1,7 @@
 import {Message} from "../types/Message";
 import {Recipient} from "../types/Recipient";
 import {NotifierProviderInterface} from "./NotifierProviderInterface";
-import {database} from "../Database";
+import {notificationChannelManager} from "../services/notification/NotificationChannelManager";
 
 export class Notifier {
     private readonly providers: any;
@@ -26,7 +26,7 @@ export class Notifier {
         }
 
         // Send to all users
-        const users = await database.getAllNotificationChannelsForProviderAndCommunity(message.provider, message.community);
+        const users = await notificationChannelManager.getAllNotificationChannelsForProviderAndCommunity(message.provider, message.community);
         console.log(`[Notifier] Sending message to ${users.length} users.`)
         for (const user of users) {
             const recipient: Recipient = {
