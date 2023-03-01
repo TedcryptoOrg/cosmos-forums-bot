@@ -40,7 +40,7 @@ jobs:
             Dockerfile
             package.json
             package-lock.json
-            supervisor.conf
+            supervisord.conf
             tsconfig.json
           outPath: deploy.tar
   
