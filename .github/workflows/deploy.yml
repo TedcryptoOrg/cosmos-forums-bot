@@ -32,7 +32,6 @@ jobs:
           cwd: "./"
           files: |
             .env.dist
-            lib/
             migrations/
             scripts/
             src/
