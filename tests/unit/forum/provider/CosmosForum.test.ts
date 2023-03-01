@@ -1,48 +1,58 @@
 import {CosmosForum} from "../../../../src/forum/provider/CosmosForum";
+import axios from 'axios';
+const Parser = require('rss-parser');
 
-const nock = require("nock");
+jest.mock('axios');
+jest.mock('rss-parser');
 
 describe("Cosmos", () => {
+    const mockAxios = axios as jest.Mocked<typeof axios>;
+    const mockParser = Parser as jest.Mocked<typeof Parser>;
+    const mockParserResult = {
+        items: [
+            {
+                title: "First article",
+                link: "https://forum.cosmos.network/first",
+                community: 'cosmos',
+                provider: 'cosmos-forum',
+            },
+            {
+                title: "Second article",
+                link: "https://forum.cosmos.network/second",
+                community: 'cosmos',
+                provider: 'cosmos-forum',
+            }
+        ],
+    };
+
+    beforeEach(() => {
+        mockAxios.get.mockReset();
+        mockParser.mockReset();
+    });
+
     describe("getArticles", () => {
         it("should return a list of articles", async () => {
-            const exampleResponse = `
-                <?xml version="1.0" encoding="UTF-8"?>
-                <rss version="2.0">
-                    <channel>
-                        <title>Cosmos Forum</title>
-                        <item>
-                            <title>First article</title>
-                            <link>https://forum.cosmos.network/first</link>
-                        </item>
-                        <item>
-                            <title>Second article</title>
-                            <link>https://forum.cosmos.network/second</link>
-                        </item>
-                    </channel>
-                </rss>
-            `;
-
-            nock("https://forum.cosmos.network")
-                .get("/latest.rss")
-                .reply(200, exampleResponse);
+            mockAxios.get.mockResolvedValueOnce({ data: 'test feed text' });
+            mockParser.prototype.parseString.mockImplementationOnce((xml: string) => {
+                return Promise.resolve(mockParserResult);
+            });
 
             const cosmosForum = new CosmosForum();
-            const articles = await cosmosForum.getArticles();
+            const result = await cosmosForum.getArticles();
 
-            expect(articles).toEqual([
-                {
+            expect(result).toHaveLength(2);
+            expect(result[0]).toEqual({
                     title: "First article",
                     url: "https://forum.cosmos.network/first",
                     community: 'cosmos',
                     provider: 'cosmos-forum',
-                },
-                {
+            });
+            expect(result[1]).toEqual({
                     title: "Second article",
                     url: "https://forum.cosmos.network/second",
                     community: 'cosmos',
                     provider: 'cosmos-forum',
-                }
-            ]);
+            });
         });
     });
 });

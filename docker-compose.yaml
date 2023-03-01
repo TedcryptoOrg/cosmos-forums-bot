@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  app:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    depends_on:
+      - db
+    env_file:
+      - ./.env
+    volumes:
+      - ./:/srv:rw
+
+  db:
+    image: mariadb:10.7.3
+    environment:
+      MARIADB_ROOT_PASSWORD: 'root'
+      MARIADB_DATABASE: 'cosmos-forum-bot'
+      MARIADB_USER: 'app'
+      MARIADB_PASSWORD: 'pw'
+    volumes:
+      - db-data:/var/lib/mysql/data:rw
+    ports:
+      - "3306:3306"
+
+volumes:
+  db-data: {}

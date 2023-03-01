@@ -1,9 +1,9 @@
 import {Command} from './Command';
-import {database} from "../Database";
 import {CommandStructure} from "../types/CommandStructure";
 import {CommandResult} from "../types/CommandResult";
 
 const forumManager = require('../forum/ForumManager').forumManager;
+const notificationChannelManager = require('../services/notification/NotificationChannelManager').notificationChannelManager;
 
 export class Start implements Command {
     public name: string;
@@ -56,14 +56,14 @@ export class Start implements Command {
             }
         }
 
-        const user = await database.getNotificationChannel(command.channelId, command.platform, provider, community);
+        const user = await notificationChannelManager.getNotificationChannel(command.channelId, command.platform, provider, community);
         if (user) {
             return {
                 success: true,
                 message: 'Notification channel already exists.'
             }
         } else {
-            await database.createNotificationChannel(command.userId, command.channelId, command.platform, provider, community);
+            await notificationChannelManager.createNotificationChannel(command.userId, command.channelId, command.platform, provider, community);
             return {
                 success: true,
                 message: `Notification channel created!\n\n

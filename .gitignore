@@ -6,3 +6,4 @@ lib
 *.tgz
 .env
 data/
+supervisord.pid

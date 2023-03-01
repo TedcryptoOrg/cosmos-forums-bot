@@ -7,21 +7,20 @@ import {DiscordClient} from "./clients/DiscordClient";
 import DiscordProvider from "./notifier/provider/DiscordProvider";
 import {TwitterClient} from "./clients/TwitterClient";
 import TwitterProvider from "./notifier/provider/TwitterProvider";
+import {twitterClientManager} from "./services/twitter/TwitterClientManager";
+import {sequelize} from "./sequelize";
 
 const path = require('path')
 
 dotenv.config({debug: true, path: path.resolve(__dirname, '../.env')});
 
-const database = require('./Database').database;
 const forumManager = require('./forum/ForumManager').forumManager;
+const articleManager = require('./services/articles/ArticleManager').articleManager;
 
 let notifier: Notifier;
 
 const main = async () => {
-    await database.connect();
-    await database.initializeDB();
-    console.log('Initialized database.');
-
+    await sequelize.sync({alter: true});
     // Start clients
     let notifierClients = [];
 
@@ -50,7 +49,7 @@ const main = async () => {
 
     // Twitter
     const twitterEnabled = process.env.TWITTER_ENABLED ?? undefined;
-    const twitterClients = await database.getAllTwitterClients();
+    const twitterClients = await twitterClientManager.getTwitterClients();
     if (twitterEnabled === "true" && twitterClients.length) {
         for (const configuration of twitterClients) {
             console.log('Starting "' + configuration.name + '" twitter client...');
@@ -82,14 +81,14 @@ Promise.all([main()])
                     for (const article of articles) {
                         console.log(`[${article.provider}] Fetched article "${article.title}" from "${article.community}"`);
 
-                        const dbArticle = await database.getArticle(article.title, article.provider, article.community);
+                        const dbArticle = await articleManager.getArticle(article.title, article.provider, article.community);
                         if (dbArticle) {
                             console.log('Topic "'+article.title+'" already exists. Skipping...')
                             continue;
                         }
 
                         console.log('Topic "'+article.title+'" does not exist. Adding...')
-                        await database.insertArticle(article.title, article.url, article.provider, article.community);
+                        await articleManager.insertArticle(article.title, article.url, article.provider, article.community);
                         const message: Message = {
                             text: `**New ${article.provider} - ${article.community} topic**\n\n`+
                                 `Title: ${article.title}\n`+

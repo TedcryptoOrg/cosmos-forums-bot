@@ -1,6 +1,8 @@
 import * as readline from "readline";
 import {Platforms} from "../src/enums/Platforms";
 import {forumManager} from "../src/forum/ForumManager";
+import {notificationChannelManager} from "../src/services/notification/NotificationChannelManager";
+import {twitterClientManager} from "../src/services/twitter/TwitterClientManager";
 
 const rl = readline.createInterface({
     input: process.stdin,
@@ -15,7 +17,7 @@ const database = require('./../src/Database').database;
 async function main(): Promise<void> {
     await database.connect();
     await database.initializeDB();
-    const twitterClients = await database.getAllTwitterClients();
+    const twitterClients = await twitterClientManager.getTwitterClients();
     if (!twitterClients.length) {
         console.error('No twitter clients found');
         rl.close();
@@ -42,7 +44,7 @@ async function main(): Promise<void> {
         return;
     }
 
-    await database.createNotificationChannel(twitterClient, twitterClient, Platforms.Twitter, provider, community);
+    await notificationChannelManager.createNotificationChannel(twitterClient, twitterClient, Platforms.Twitter, provider, community);
     console.log('Channel created');
     rl.close();
 }
