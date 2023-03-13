@@ -1,4 +1,4 @@
-import {Column, Model, Table} from "sequelize-typescript";
+import {Column, Default, Model, Table} from "sequelize-typescript";
 
 @Table({tableName: 'notification_channels'})
 export class NotificationChannel extends Model {
@@ -19,4 +19,11 @@ export class NotificationChannel extends Model {
 
     @Column
     community!: string;
+
+    @Default(0)
+    @Column
+    error_counter!: number;
+
+    @Column
+    last_error?: string;
 }

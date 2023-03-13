@@ -30,6 +30,13 @@ class NotificationChannelManager {
             }
         });
     }
+
+    async setError(notificationChannel: NotificationChannel, error: string) {
+        notificationChannel.error_counter = notificationChannel.error_counter + 1;
+        notificationChannel.last_error = error;
+
+        await notificationChannel.save();
+    }
 }
 
 export const notificationChannelManager = new NotificationChannelManager();
