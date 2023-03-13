@@ -2,9 +2,10 @@ import {CommonWealth} from "./provider/CommonWealth";
 import {CosmosForum} from "./provider/CosmosForum";
 import {ForumProvider} from "./provider/ForumProvider";
 import {MarsForum} from "./provider/MarsForum";
+import {AstroPortForum} from "./provider/AstroPortForum";
 
 class ForumManager {
-    private providers: {
+    private readonly providers: {
         [key: string]: ForumProvider
     };
 
@@ -13,6 +14,7 @@ class ForumManager {
             new CommonWealth(),
             new CosmosForum(),
             new MarsForum(),
+            new AstroPortForum(),
         ]
 
         this.providers = {};

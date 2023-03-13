@@ -5,6 +5,7 @@ This is a bot that will help you track forum proposals. You can use our own self
 Discord bot: https://discord.com/api/oauth2/authorize?client_id=1070792565990895737&permissions=277025458240&scope=bot
 
 Telegram bot: https://t.me/CosmosForumBot
+
 Twitter bot: https://twitter.com/tedcryptoBot
 
 ## How it works
@@ -18,11 +19,12 @@ If there is a need we will replace it with a more robust solution
 
 ## Current forums
 
-| Forum        | Communities                                              |
-|--------------|----------------------------------------------------------|
-| cosmos-forum | cosmos                                                   |
-| mars-forum   | mars                                                     |
-| commonwealth | osmosis, stargaze, juno, evmos, chihuahua, bitsong-forum |
+| Forum           | Communities                                              |
+|-----------------|----------------------------------------------------------|
+| cosmos-forum    | cosmos                                                   |
+| mars-forum      | mars                                                     |
+| commonwealth    | osmosis, stargaze, juno, evmos, chihuahua, bitsong-forum |
+ | astroport-forum | astroport                                                |
 
 ### How to add more?
 
@@ -42,6 +44,12 @@ npm install -g ts-node
 
 # Install dependencies
 npm install
+```
+
+Or with Docker
+
+```shell
+docker compose up -d
 ```
 
 ### Telegram
