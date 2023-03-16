@@ -44,7 +44,7 @@ export class Notifier {
                     await provider.send(message, recipient);
                 } catch (error) {
                     await notificationChannelManager.setError(notificationChannel, String(error))
-                    console.error(error);
+                    console.error('[Notifier] Problem sending notification', error);
                 }
             }
         }

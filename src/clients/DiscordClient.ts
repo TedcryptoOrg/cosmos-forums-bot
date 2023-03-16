@@ -82,13 +82,11 @@ export class DiscordClient implements ClientInterface {
         const [guildId, channelId] = discordChannelId.split('|');
         const guild = this.client.guilds.cache.get(guildId);
         if (!guild) {
-            console.error('Guild '+guildId+' not found!')
-            return;
+            throw new Error('Guild '+guildId+' not found!');
         }
         const channel = guild.channels.cache.get(channelId);
         if (!channel) {
-            console.error('Channel '+channelId+' not found!')
-            return;
+            throw new Error('Channel '+channelId+' not found!');
         }
 
         await (channel as TextChannel).send(message);
