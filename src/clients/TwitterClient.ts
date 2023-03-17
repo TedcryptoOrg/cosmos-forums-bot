@@ -1,5 +1,4 @@
 import {Client} from 'twitter.js';
-import {CommandStructure} from "../types/CommandStructure";
 import {Commands} from "../types/Commands";
 import {Platforms} from "../enums/Platforms";
 import {ClientInterface} from "./ClientInterface";
@@ -21,13 +20,9 @@ export class TwitterClient implements ClientInterface {
     }
 
     async sendMessage(option: any, text: string) {
-        try {
-            await this.client.tweets.create({
-                text: text
-            });
-        } catch (e) {
-            console.error(e);
-        }
+        await this.client.tweets.create({
+            text: text
+        });
     }
 
     getName(): Platforms {

@@ -4,7 +4,7 @@ import {NotifierProviderInterface} from "./NotifierProviderInterface";
 import {notificationChannelManager} from "../services/notification/NotificationChannelManager";
 
 export class Notifier {
-    private readonly providers: any;
+    private readonly providers: {[key: string]: NotifierProviderInterface[]};
 
     constructor(providers: NotifierProviderInterface[] = []) {
         this.providers = {};
@@ -25,25 +25,26 @@ export class Notifier {
         }
 
         // Send to all users
-        const users = await notificationChannelManager.getAllNotificationChannelsForProviderAndCommunity(message.provider, message.community);
-        console.log(`[Notifier] Sending message to ${users.length} users.`)
-        for (const user of users) {
+        const notificationChannels = await notificationChannelManager.getAllNotificationChannelsForProviderAndCommunity(message.provider, message.community);
+        console.log(`[Notifier] Sending message to ${notificationChannels.length} users.`)
+        for (const notificationChannel of notificationChannels) {
             const recipient: Recipient = {
-                id: user.id,
+                id: notificationChannel.id,
                 options: {
-                    channel_id: user.channel_id
+                    channel_id: notificationChannel.channel_id
                 }
             }
-            if (!this.providers.hasOwnProperty(user.platform)) {
-                console.log('[Notifier] No provider configured for platform "'+user.platform+'". Skipping notification.');
+            if (!this.providers.hasOwnProperty(notificationChannel.platform)) {
+                console.log('[Notifier] No provider configured for platform "'+notificationChannel.platform+'". Skipping notification.');
                 continue;
             }
 
-            for (const provider of this.providers[user.platform]) {
+            for (const provider of this.providers[notificationChannel.platform]) {
                 try {
                     await provider.send(message, recipient);
                 } catch (error) {
-                    console.error(error);
+                    await notificationChannelManager.setError(notificationChannel, String(error))
+                    console.error('[Notifier] Problem sending notification', error);
                 }
             }
         }

@@ -1,4 +1,8 @@
 import * as dotenv from 'dotenv';
+const path = require('path')
+
+dotenv.config({debug: true, path: path.resolve(__dirname, '../.env')});
+
 import {Message} from "./types/Message";
 import TelegramProvider from "./notifier/provider/TelegramProvider";
 import {TelegramClient} from "./clients/TelegramClient";
@@ -9,10 +13,6 @@ import {TwitterClient} from "./clients/TwitterClient";
 import TwitterProvider from "./notifier/provider/TwitterProvider";
 import {twitterClientManager} from "./services/twitter/TwitterClientManager";
 import {sequelize} from "./sequelize";
-
-const path = require('path')
-
-dotenv.config({debug: true, path: path.resolve(__dirname, '../.env')});
 
 const forumManager = require('./forum/ForumManager').forumManager;
 const articleManager = require('./services/articles/ArticleManager').articleManager;
