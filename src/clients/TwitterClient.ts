@@ -1,5 +1,4 @@
 import {Client} from 'twitter.js';
-import {CommandStructure} from "../types/CommandStructure";
 import {Commands} from "../types/Commands";
 import {Platforms} from "../enums/Platforms";
 import {ClientInterface} from "./ClientInterface";

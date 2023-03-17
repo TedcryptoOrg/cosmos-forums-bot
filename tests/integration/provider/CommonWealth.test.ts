@@ -36,7 +36,7 @@ describe("CommonWealth Integration", () => {
                         "github": "https://github.com/osmosis-labs/osmosis",
                         "has_chain_events_listener": true,
                         "hide_projects": null,
-                        "icon_url": "/static/img/protocols/osm.png",
+                        "icon_url": "https://commonwealth-uploads.s3.us-east-2.amazonaws.com/osm.png",
                         "id": "osmosis",
                         "name": "Osmosis",
                         "network": "osmosis",
