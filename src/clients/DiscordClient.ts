@@ -1,4 +1,4 @@
-import { ChannelType, Client, GatewayIntentBits, REST, Routes, SlashCommandBuilder, type TextChannel } from 'discord.js'
+import { Client, GatewayIntentBits, REST, Routes, SlashCommandBuilder, type TextChannel } from 'discord.js'
 import { type ClientInterface } from './ClientInterface'
 import { type Command } from '../command/Command'
 import { Start } from '../command/Start'
@@ -44,7 +44,6 @@ export class DiscordClient implements ClientInterface {
 
       const commandArguments: string[] = []
       if (command.options != null) {
-        // @ts-expect-error
         command.options.forEach(commandOption => {
           const option = interaction.options.get(commandOption.name)?.value
           if (option) {

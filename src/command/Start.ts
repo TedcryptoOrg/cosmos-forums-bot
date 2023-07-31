@@ -9,7 +9,7 @@ export class Start implements Command {
   public name: string
   public description: string
   public usage: string
-  public options: void | Array<{ name: string, description: string, required: boolean }>
+  public options: undefined | Array<{ name: string, description: string, required: boolean }>
 
   constructor () {
     this.name = 'start'

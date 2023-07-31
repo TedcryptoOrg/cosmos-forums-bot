@@ -1,6 +1,7 @@
 import { Sequelize } from 'sequelize-typescript'
+import path from 'path'
 
-// @ts-expect-error
+// @ts-expect-error We dont have a type for this
 export const sequelize = new Sequelize({
   dialect: process.env.DB_DIALECT,
   database: process.env.DB_NAME,
@@ -8,5 +9,5 @@ export const sequelize = new Sequelize({
   port: process.env.DB_PORT,
   username: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
-  models: [__dirname + '/models']
+  models: path.join(__dirname, '/models')
 })

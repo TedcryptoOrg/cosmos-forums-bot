@@ -5,7 +5,7 @@ export interface Command {
   name: string
   description: string
   usage?: string
-  options?: void | Array<{ name: string, description: string, required: boolean }>
+  options?: undefined | Array<{ name: string, description: string, required: boolean }>
 
   run: (command: CommandStructure) => Promise<CommandResult>
 }
