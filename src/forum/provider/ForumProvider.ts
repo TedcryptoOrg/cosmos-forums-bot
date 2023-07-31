@@ -1,19 +1,19 @@
-import {Article} from "../../types/Article";
-import {ForumProviders} from "../../enums/ForumProviders";
+import { type Article } from '../../types/Article'
+import { type ForumProviders } from '../../enums/ForumProviders'
 
 export interface ForumProvider {
-    /**
+  /**
      * Returns the articles from the provider to all communities
      */
-    getArticles(): Promise<Article[]>;
+  getArticles: () => Promise<Article[]>
 
-    /**
+  /**
      * Returns the communities that this provider supports
      */
-    getCommunities(): string[];
+  getCommunities: () => string[]
 
-    /**
+  /**
      * Returns the name of the provider
      */
-    getName(): ForumProviders;
+  getName: () => ForumProviders
 }

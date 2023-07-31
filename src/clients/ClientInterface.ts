@@ -1,6 +1,6 @@
-import {Platforms} from "../enums/Platforms";
+import { type Platforms } from '../enums/Platforms'
 
 export interface ClientInterface {
-    start(): Promise<void>;
-    getName(): Platforms;
+  start: () => Promise<void>
+  getName: () => Platforms
 }
