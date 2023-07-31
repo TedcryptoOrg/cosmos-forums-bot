@@ -1,5 +1,5 @@
 export enum Platforms {
-    Discord = 'discord',
-    Telegram = 'telegram',
-    Twitter = 'twitter',
+  Discord = 'discord',
+  Telegram = 'telegram',
+  Twitter = 'twitter',
 }

@@ -1,36 +1,33 @@
-import {CommonWealth} from "./provider/CommonWealth";
-import {CosmosForum} from "./provider/CosmosForum";
-import {ForumProvider} from "./provider/ForumProvider";
-import {MarsForum} from "./provider/MarsForum";
-import {AstroPortForum} from "./provider/AstroPortForum";
+import { CommonWealth } from './provider/CommonWealth'
+import { CosmosForum } from './provider/CosmosForum'
+import { type ForumProvider } from './provider/ForumProvider'
+import { MarsForum } from './provider/MarsForum'
+import { AstroPortForum } from './provider/AstroPortForum'
 
 class ForumManager {
-    private readonly providers: {
-        [key: string]: ForumProvider
-    };
+  private readonly providers: Record<string, ForumProvider>
 
-    constructor() {
-        let providers = [
-            new CommonWealth(),
-            new CosmosForum(),
-            new MarsForum(),
-            new AstroPortForum(),
-        ]
+  constructor () {
+    const providers = [
+      new CommonWealth(),
+      new CosmosForum(),
+      new MarsForum(),
+      new AstroPortForum()
+    ]
 
-        this.providers = {};
-        for(const provider of providers) {
-            this.providers[String(provider.getName())] = provider;
-        }
+    this.providers = {}
+    for (const provider of providers) {
+      this.providers[String(provider.getName())] = provider
     }
+  }
 
-    getProviders(): {[key: string]: ForumProvider}
-    {
-        return this.providers;
-    }
+  getProviders (): Record<string, ForumProvider> {
+    return this.providers
+  }
 
-    getProvider(name: string): ForumProvider|null {
-        return this.providers[name] || null;
-    }
+  getProvider (name: string): ForumProvider | null {
+    return this.providers[name] || null
+  }
 }
 
-export const forumManager = new ForumManager();
+export const forumManager = new ForumManager()

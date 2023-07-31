@@ -1,4 +1,4 @@
-export type Recipient = {
-    id: number;
-    options: any;
+export interface Recipient {
+  id: number
+  options: any
 }

@@ -1,9 +1,9 @@
-import {TwitterClient} from "../../models/TwitterClient";
+import { TwitterClient } from '../../models/TwitterClient'
 
 class TwitterClientManager {
-    async getTwitterClients(): Promise<TwitterClient[]> {
-        return await TwitterClient.findAll();
-    }
+  async getTwitterClients (): Promise<TwitterClient[]> {
+    return await TwitterClient.findAll()
+  }
 }
 
-export const twitterClientManager = new TwitterClientManager();
+export const twitterClientManager = new TwitterClientManager()

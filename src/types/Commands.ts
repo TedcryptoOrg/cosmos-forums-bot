@@ -1,5 +1,3 @@
-import { Command } from "../command/command";
+import { type Command } from '../command/command'
 
-export type Commands = {
-    [key: string]: Command;
-}
+export type Commands = Record<string, Command>

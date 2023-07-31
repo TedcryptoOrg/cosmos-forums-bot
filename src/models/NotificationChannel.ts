@@ -1,29 +1,29 @@
-import {Column, Default, Model, Table} from "sequelize-typescript";
+import { Column, Default, Model, Table } from 'sequelize-typescript'
 
-@Table({tableName: 'notification_channels'})
+@Table({ tableName: 'notification_channels' })
 export class NotificationChannel extends Model {
-    @Column({primaryKey: true, autoIncrement: true})
-    id!: number;
+  @Column({ primaryKey: true, autoIncrement: true })
+    id!: number
 
-    @Column
-    user_id!: string;
+  @Column
+    user_id!: string
 
-    @Column
-    channel_id!: string;
+  @Column
+    channel_id!: string
 
-    @Column
-    platform!: string;
+  @Column
+    platform!: string
 
-    @Column
-    provider!: string;
+  @Column
+    provider!: string
 
-    @Column
-    community!: string;
+  @Column
+    community!: string
 
-    @Default(0)
-    @Column
-    error_counter!: number;
+  @Default(0)
+  @Column
+    error_counter!: number
 
-    @Column
-    last_error?: string;
+  @Column
+    last_error?: string
 }

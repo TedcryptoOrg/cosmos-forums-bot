@@ -1,4 +1,4 @@
-export type CommandResult = {
-    success: boolean,
-    message: string,
+export interface CommandResult {
+  success: boolean
+  message: string
 }
