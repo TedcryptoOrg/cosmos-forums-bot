@@ -12,6 +12,11 @@ describe("CommonWealth Integration", () => {
             const communities = await commonWealth.fetchCommunities({
                 community_id: 'osmosis'
             });
+
+            // assert key exist and delete it, so we don't have to maintain further updates
+            expect(Object.keys(communities.result.communities[0])).toContain('updated_at');
+            delete communities.result.communities[0].updated_at;
+
             expect(communities.status).toBe("Success");
             expect(communities.result).toEqual({
                 "communities": [
@@ -21,12 +26,13 @@ describe("CommonWealth Integration", () => {
                         "base": "cosmos",
                         "bech32_prefix": "osmo",
                         "block_explorer_ids": null,
+                        "category": ["DeFi", "DAO"],
                         "chain_node_id": 20,
                         "collapsed_on_homepage": false,
+                        "created_at": "2021-07-28T05:55:16.509Z",
                         "custom_domain": "gov.osmosis.zone",
                         "custom_stages": "[\"Discussion\",\"Drafted - Pre-Voting\",\"On Chain\",\"Passed\",\"Rejected\",\"Withdrawn\",\"Abandoned\",\"Revised Thread Posted\"]",
-                        "default_allow_permissions": "0",
-                        "default_deny_permissions": "2048",
+                        "default_page": null,
                         "default_summary_view": true,
                         "default_symbol": "OSMO",
                         "description": "The Interchain Dex",
@@ -35,8 +41,9 @@ describe("CommonWealth Integration", () => {
                         "element": "",
                         "github": "https://github.com/osmosis-labs/osmosis",
                         "has_chain_events_listener": true,
+                        "has_homepage": false,
                         "hide_projects": null,
-                        "icon_url": "https://commonwealth-uploads.s3.us-east-2.amazonaws.com/osm.png",
+                        "icon_url": "https://assets.commonwealth.im/osm.png",
                         "id": "osmosis",
                         "name": "Osmosis",
                         "network": "osmosis",
