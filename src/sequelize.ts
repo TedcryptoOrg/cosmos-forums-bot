@@ -9,5 +9,5 @@ export const sequelize = new Sequelize({
   port: process.env.DB_PORT,
   username: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
-  models: path.join(__dirname, '/models')
+  models: path.join(__dirname, 'models')
 })
