@@ -1,4 +1,6 @@
 import * as dotenv from 'dotenv'
+import * as Sentry from '@sentry/node';
+import * as Tracing from '@sentry/tracing';
 
 import { type Message } from './types/Message'
 import TelegramProvider from './notifier/provider/TelegramProvider'
@@ -13,6 +15,12 @@ import { sequelize } from './sequelize'
 const path = require('path')
 
 dotenv.config({ debug: true, path: path.resolve(__dirname, '../.env') })
+
+if (process.env.SENTRY_DSN !== undefined) {
+Sentry.init({
+  dsn: process.env.SENTRY_DSN,
+  tracesSampleRate: 1.0,
+});
 
 const forumManager = require('./forum/ForumManager').forumManager
 const articleManager = require('./services/articles/ArticleManager').articleManager
@@ -73,6 +81,11 @@ const main = async () => {
 Promise.all([main()])
   .then(() => {
     const check = async () => {
+      const transaction = Sentry.startTransaction({
+        op: "fetch_new_articles",
+        name: "Fetch new articles and notify",
+      });
+
       try {
         const providers = forumManager.getProviders()
         for (const providerName of Object.keys(providers)) {
