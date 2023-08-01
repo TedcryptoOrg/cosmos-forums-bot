@@ -38,10 +38,15 @@ const main = async () => {
   const telegramToken = process.env.TELEGRAM_BOT_TOKEN ?? undefined
   if (telegramEnabled === 'true' && telegramToken) {
     console.log('Starting telegram client...')
-    const telegramClient = new TelegramClient(telegramToken)
-    await telegramClient.start()
+    try {
+      const telegramClient = new TelegramClient(telegramToken)
+      await telegramClient.start()
 
-    notifierClients.push(new TelegramProvider(telegramClient))
+      notifierClients.push(new TelegramProvider(telegramClient))
+    } catch (error) {
+      console.error('Failed to load/start Telegram', error);
+    }
+    console.log('Started telegram client')
   }
 
   // Discord
@@ -50,10 +55,15 @@ const main = async () => {
   const discordClientId = process.env.DISCORD_CLIENT_ID ?? undefined
   if (discordEnabled === 'true' && discordBotToken && discordClientId) {
     console.log('Starting discord client...')
-    const discordClient = new DiscordClient(discordClientId, discordBotToken)
-    await discordClient.start()
+    try {
+      const discordClient = new DiscordClient(discordClientId, discordBotToken)
+      await discordClient.start()
 
-    notifierClients.push(new DiscordProvider(discordClient))
+      notifierClients.push(new DiscordProvider(discordClient))
+    } catch (error) {
+        console.error('Failed to load/start Discord', error);
+    }
+    console.log('Started discord client')
   }
 
   // Twitter
@@ -62,16 +72,21 @@ const main = async () => {
   if (twitterEnabled === 'true' && (twitterClients.length > 0)) {
     for (const configuration of twitterClients) {
       console.log('Starting "' + configuration.name + '" twitter client...')
-      const twitterClient = new TwitterClient({
-        consumerKey: configuration.consumer_key,
-        consumerSecret: configuration.consumer_secret,
-        accessToken: configuration.access_token,
-        accessTokenSecret: configuration.access_token_secret,
-        bearerToken: configuration.bearer_token
-      })
-      await twitterClient.start()
+      try {
+        const twitterClient = new TwitterClient({
+          consumerKey: configuration.consumer_key,
+          consumerSecret: configuration.consumer_secret,
+          accessToken: configuration.access_token,
+          accessTokenSecret: configuration.access_token_secret,
+          bearerToken: configuration.bearer_token
+        })
+        await twitterClient.start()
 
-      notifierClients.push(new TwitterProvider(twitterClient, configuration.id))
+        notifierClients.push(new TwitterProvider(twitterClient, configuration.id))
+      } catch (error) {
+        console.error('Failed to load/start Twitter' + configuration.name, error);
+      }
+      console.log('Started "' + configuration.name + '" twitter client')
     }
   }
 
