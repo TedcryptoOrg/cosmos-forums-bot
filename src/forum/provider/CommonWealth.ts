@@ -73,7 +73,8 @@ export class CommonWealth implements ForumProvider {
     'juno',
     'evmos',
     'chihuahua',
-    'bitsong-forum'
+    'bitsong-forum',
+    'injective'
   ]
 
   private lastThreads: Record<string, number> = {}
