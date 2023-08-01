@@ -44,7 +44,7 @@ const main = async () => {
 
       notifierClients.push(new TelegramProvider(telegramClient))
     } catch (error) {
-      console.error('Failed to load/start Telegram', error);
+      console.error('Failed to load/start Telegram', error)
     }
     console.log('Started telegram client')
   }
@@ -61,7 +61,7 @@ const main = async () => {
 
       notifierClients.push(new DiscordProvider(discordClient))
     } catch (error) {
-        console.error('Failed to load/start Discord', error);
+      console.error('Failed to load/start Discord', error)
     }
     console.log('Started discord client')
   }
@@ -84,7 +84,7 @@ const main = async () => {
 
         notifierClients.push(new TwitterProvider(twitterClient, configuration.id))
       } catch (error) {
-        console.error('Failed to load/start Twitter' + configuration.name, error);
+        console.error('Failed to load/start Twitter' + configuration.name, error)
       }
       console.log('Started "' + configuration.name + '" twitter client')
     }
