@@ -17,10 +17,12 @@ const path = require('path')
 dotenv.config({ debug: true, path: path.resolve(__dirname, '../.env') })
 
 if (process.env.SENTRY_DSN !== undefined) {
-Sentry.init({
-  dsn: process.env.SENTRY_DSN,
-  tracesSampleRate: 1.0,
-});
+  Sentry.init({
+    dsn: process.env.SENTRY_DSN,
+    tracesSampleRate: 1.0,
+    environment: process.env.SENTRY_ENVIRONMENT ?? undefined
+  });
+}
 
 const forumManager = require('./forum/ForumManager').forumManager
 const articleManager = require('./services/articles/ArticleManager').articleManager
