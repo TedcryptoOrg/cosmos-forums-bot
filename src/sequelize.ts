@@ -1,6 +1,10 @@
 import { Sequelize } from 'sequelize-typescript'
 import path from 'path'
 
+import dotenv from 'dotenv'
+
+dotenv.config({ path: path.join(__dirname, '/../.env') })
+
 // @ts-expect-error We dont have a type for this
 export const sequelize = new Sequelize({
   dialect: process.env.DB_DIALECT,
@@ -9,5 +13,5 @@ export const sequelize = new Sequelize({
   port: process.env.DB_PORT,
   username: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
-  models: path.join(__dirname, 'models')
+  models: [path.join(__dirname, '/models')]
 })
