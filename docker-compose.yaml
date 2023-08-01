@@ -13,7 +13,7 @@ services:
       - ./:/srv:rw
 
   db:
-    image: mariadb:10.11.4
+    image: mariadb:11.0.2
     environment:
       MARIADB_ROOT_PASSWORD: 'root'
       MARIADB_DATABASE: 'cosmos-forum-bot'
