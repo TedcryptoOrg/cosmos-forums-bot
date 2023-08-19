@@ -5,8 +5,8 @@
   "scripts": {
     "test": "jest",
     "clean": "rm -rf ./lib",
-    "lint": "eslint src",
-    "lint:fix": "eslint --fix src scripts"
+    "lint": "eslint src/**/*.ts",
+    "lint:fix": "eslint --fix src/**/*.ts scripts/**/*.ts"
   },
   "keywords": [],
   "author": "Josh_Lopes<josluis.lopes@gmail.com>",
