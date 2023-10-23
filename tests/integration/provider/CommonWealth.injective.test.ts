@@ -37,6 +37,7 @@ describe("CommonWealth Integration (Injective)", () => {
                         "default_symbol": "INJ",
                         "description": "Access Limitless DeFi Markets with Zero Barriers.",
                         "discord": "https://discord.com/invite/NK4qdbv",
+                        "discord_bot_webhooks_enabled": false,
                         "discord_config_id": null,
                         "element": null,
                         "github": "https://github.com/InjectiveLabs/",

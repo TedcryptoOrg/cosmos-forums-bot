@@ -26,5 +26,5 @@ jobs:
       - name: Install modules
         run: npm install
 
-      - name: Run Lint
+      - name: Run Tests
         run: npm test
