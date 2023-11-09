@@ -36,6 +36,8 @@ describe("CommonWealth Integration", () => {
                         "default_summary_view": true,
                         "default_symbol": "OSMO",
                         "description": "The Interchain Dex",
+                        "directory_page_chain_node_id": null,
+                        "directory_page_enabled": false,
                         "discord": "https://discord.com/invite/osmosis",
                         "discord_bot_webhooks_enabled": false,
                         "discord_config_id": null,
