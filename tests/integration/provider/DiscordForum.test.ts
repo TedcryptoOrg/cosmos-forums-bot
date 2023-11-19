@@ -1,12 +1,12 @@
 import {DiscordForum} from "../../../src/forum/provider/DiscordForum";
-//import {DiscordClient} from "../../../src/clients/DiscordClient";
+import {DiscordClient} from "../../../src/clients/DiscordClient";
 
-//let discordClientId = process.env.DISCORD_CLIENT_ID ?? undefined;
-//let discordBotToken = process.env.DISCORD_BOT_TOKEN ?? undefined;
+let discordClientId = process.env.DISCORD_CLIENT_ID ?? undefined;
+let discordBotToken = process.env.DISCORD_BOT_TOKEN ?? undefined;
 
-//let discordClient = new DiscordClient(String(discordClientId), String(discordBotToken));
+let discordClient = new DiscordClient(String(discordClientId), String(discordBotToken));
 
-describe.skip("Discord forym Integration", () => {
+describe("Discord forym Integration", () => {
     let discordForum: DiscordForum;
 
     beforeAll(async () => {
