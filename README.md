@@ -24,7 +24,8 @@ If there is a need we will replace it with a more robust solution
 | cosmos-forum    | cosmos                                                   |
 | mars-forum      | mars                                                     |
 | commonwealth    | osmosis, stargaze, juno, evmos, chihuahua, bitsong-forum |
- | astroport-forum | astroport                                                |
+| astroport-forum | astroport                                                |
+| discord-forum   | kujira                                                   |
 
 ### How to add more?
 
@@ -59,7 +60,8 @@ it to your .env file.
 
 ### Discord
 
-You need to provide the client id and the bot token, you can create your own bot from the developer portal on discord (https://discord.com/developers/applications)
+You need to provide the client id and the bot token, you can create your own bot from the developer 
+portal on discord (https://discord.com/developers/applications)
 
 ### Run bot
 
