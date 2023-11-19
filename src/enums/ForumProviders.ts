@@ -3,4 +3,5 @@ export enum ForumProviders {
   CosmosForum = 'cosmos-forum',
   MarsForum = 'mars-forum',
   AstroPortForum = 'astroport-forum',
+  DiscordForum = 'discord-forum',
 }

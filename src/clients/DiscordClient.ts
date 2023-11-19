@@ -1,7 +1,7 @@
 import { Client, GatewayIntentBits, REST, Routes, SlashCommandBuilder, type TextChannel } from 'discord.js'
 import { type ClientInterface } from './ClientInterface'
 import { type Command } from '../command/Command'
-import { Start } from '../command/Start'
+//import { Start } from '../command/Start'
 import { type CommandStructure } from '../types/CommandStructure'
 import { Platforms } from '../enums/Platforms'
 
@@ -10,6 +10,7 @@ export class DiscordClient implements ClientInterface {
   private readonly clientId: string
   private readonly botToken: string
   private readonly commands: Record<string, Command>
+  private isStarted = false;
 
   constructor (clientId: string, token: string) {
     this.client = new Client({
@@ -22,11 +23,14 @@ export class DiscordClient implements ClientInterface {
     this.clientId = clientId
     this.botToken = token
     this.commands = {
-      start: new Start()
+      //start: new Start()
     }
   }
 
   async start () {
+    if (this.isStarted) {
+      return;
+    }
     await this.setUpCommands()
 
     this.client.on('ready', () => {
@@ -93,6 +97,10 @@ export class DiscordClient implements ClientInterface {
 
   getName (): Platforms {
     return Platforms.Discord
+  }
+
+  getClient(): Client {
+    return this.client
   }
 
   private async setUpCommands (): Promise<void> {
