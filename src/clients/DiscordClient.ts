@@ -137,7 +137,7 @@ export class DiscordClient implements ClientInterface {
     console.log('Successfully reloaded application (/) commands.')
   }
 
-  async stop() {
+  async stop () {
     await this.client.destroy()
   }
 }
