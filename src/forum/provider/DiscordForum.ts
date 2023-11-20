@@ -43,7 +43,7 @@ export class DiscordForum implements ForumProvider {
         for (const thread of threadsArray) {
             articles.push({
                 title: thread.name,
-                url: 'https://discord.com/channels/' + communityKey + '/' + community.channel_id + '/' + thread.id,
+                url: thread.url,
                 community: communityKey,
                 provider: this.getName()
             })
