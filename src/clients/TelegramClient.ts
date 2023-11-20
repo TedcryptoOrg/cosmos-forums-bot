@@ -48,10 +48,6 @@ export class TelegramClient implements ClientInterface {
       })
     })
 
-    this.bot.help((ctx) => {
-      ctx.reply('Use the command /start with forum provider (cosmos-forum or commonwealth) and the community name to start receiving notifications.')
-    })
-
     this.bot.launch()
   }
 
