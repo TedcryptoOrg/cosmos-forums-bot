@@ -63,14 +63,12 @@ export class Start implements Command {
       }
     } else {
       await notificationChannelManager.createNotificationChannel(command.userId, command.channelId, command.platform, provider, community)
+
+      console.log(`[${command.platform}][Command: start][${provider}] Notification channel for ${community} created!`, command)
+
       return {
         success: true,
-        message: `Notification channel created!\n\n
-                    User Id: ${command.userId}\n 
-                    Channel ID: ${command.channelId}\n
-                    Platform: ${command.platform}\n
-                    Provider: ${provider}\n
-                    Community: ${community}`
+        message: `Notification channel for ${community} created by ${command.userId}!`
       }
     }
   }
