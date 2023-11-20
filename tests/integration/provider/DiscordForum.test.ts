@@ -6,12 +6,17 @@ let discordBotToken = process.env.DISCORD_BOT_TOKEN ?? undefined;
 
 let discordClient = new DiscordClient(String(discordClientId), String(discordBotToken));
 
-describe("Discord forym Integration", () => {
+// Skip: We don't have a Discord server to test against, use this in local for development
+describe.skip("Discord forum Integration", () => {
     let discordForum: DiscordForum;
 
     beforeAll(async () => {
         await discordClient.start();
         discordForum = new DiscordForum(discordClient);
+    })
+
+    afterAll(async () => {
+        await discordClient.stop();
     })
 
     describe("getTopics", () => {

@@ -2,13 +2,13 @@ import { type ForumProvider } from './ForumProvider'
 import { type Article } from '../../types/Article'
 import { ForumProviders } from '../../enums/ForumProviders'
 import {DiscordClient} from "../../clients/DiscordClient";
-import {Collection, FetchedThreads, ForumChannel, Message, ThreadChannel} from "discord.js";
+import {ChannelType, FetchedThreads, ForumChannel} from "discord.js";
 
 export class DiscordForum implements ForumProvider {
   private readonly discordClient: DiscordClient
   private readonly communities: {[key: string]: {channel_id: string}} = {
     kujira: {
-      channel_id: '1175733196504186921',
+      channel_id: '1069936087201484881', // #kujira agora-forum
     }
   }
 
@@ -26,15 +26,23 @@ export class DiscordForum implements ForumProvider {
     const articles: Article[] = []
     for (const communityKey in this.communities) {
         const community = this.communities[communityKey]
-        const threads = await this.fetchNewThreads(communityKey)
+        const threads = (await this.fetchNewThreads(communityKey))?.threads?.values()
         if (threads === undefined) {
             continue
         }
+        const threadsArray = Array.from(threads)
+        if (this.lastThreads[communityKey] === undefined) {
+            this.lastThreads[communityKey] = ''
+        }
+        if (this.lastThreads[communityKey] === threadsArray[0].id) {
+            console.log(`[Discord Forum][${communityKey}] No new articles found.`)
+            continue
+        }
+        this.lastThreads[communityKey] = threadsArray[0].id
 
-        for (const thread of threads.threads.values()) {
-            const title = thread.name
+        for (const thread of threadsArray) {
             articles.push({
-                title,
+                title: thread.name,
                 url: 'https://discord.com/channels/' + communityKey + '/' + community.channel_id + '/' + thread.id,
                 community: communityKey,
                 provider: this.getName()
@@ -75,6 +83,6 @@ export class DiscordForum implements ForumProvider {
         return;
     }
 
-    return channel.threads.fetchActive();
+    return channel.threads.fetchActive(false);
   };
 }
