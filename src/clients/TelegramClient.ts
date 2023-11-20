@@ -5,6 +5,8 @@ import { Start } from '../command/Start'
 import { type CommandStructure } from '../types/CommandStructure'
 import { type Commands } from '../types/Commands'
 import { Stop } from '../command/Stop'
+import { Help } from '../command/Help'
+import { List } from '../command/List'
 
 export class TelegramClient implements ClientInterface {
   private readonly bot: Telegraf
@@ -14,7 +16,9 @@ export class TelegramClient implements ClientInterface {
     this.bot = new Telegraf(botToken)
     this.commands = {
       start: new Start(),
-      stop: new Stop()
+      stop: new Stop(),
+      help: new Help(),
+      list: new List()
     }
   }
 
