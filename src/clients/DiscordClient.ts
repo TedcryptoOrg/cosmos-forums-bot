@@ -10,6 +10,7 @@ export class DiscordClient implements ClientInterface {
   private readonly clientId: string
   private readonly botToken: string
   private readonly commands: Record<string, Command>
+  private isStarted = false
 
   constructor (clientId: string, token: string) {
     this.client = new Client({
@@ -27,6 +28,9 @@ export class DiscordClient implements ClientInterface {
   }
 
   async start () {
+    if (this.isStarted) {
+      return
+    }
     await this.setUpCommands()
 
     this.client.on('ready', () => {
@@ -74,6 +78,7 @@ export class DiscordClient implements ClientInterface {
     })
 
     await this.client.login(this.botToken)
+    this.isStarted = true
   }
 
   async sendMessage (discordChannelId: string, message: string) {
@@ -93,6 +98,10 @@ export class DiscordClient implements ClientInterface {
 
   getName (): Platforms {
     return Platforms.Discord
+  }
+
+  getClient (): Client {
+    return this.client
   }
 
   private async setUpCommands (): Promise<void> {
@@ -126,5 +135,9 @@ export class DiscordClient implements ClientInterface {
     await rest.put(Routes.applicationCommands(this.clientId), { body: commands })
 
     console.log('Successfully reloaded application (/) commands.')
+  }
+
+  async stop () {
+    await this.client.destroy()
   }
 }

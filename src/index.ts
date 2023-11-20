@@ -11,6 +11,7 @@ import { TwitterClient } from './clients/TwitterClient'
 import TwitterProvider from './notifier/provider/TwitterProvider'
 import { twitterClientManager } from './services/twitter/TwitterClientManager'
 import { sequelize } from './sequelize'
+import {DiscordForum} from "./forum/provider/DiscordForum";
 const path = require('path')
 
 dotenv.config({ debug: true, path: path.resolve(__dirname, '../.env') })
@@ -53,10 +54,11 @@ const main = async () => {
   const discordEnabled = process.env.DISCORD_ENABLED ?? undefined
   const discordBotToken = process.env.DISCORD_BOT_TOKEN ?? undefined
   const discordClientId = process.env.DISCORD_CLIENT_ID ?? undefined
+  let discordClient = undefined
   if (discordEnabled === 'true' && discordBotToken && discordClientId) {
     console.log('Starting discord client...')
     try {
-      const discordClient = new DiscordClient(discordClientId, discordBotToken)
+      discordClient = new DiscordClient(discordClientId, discordBotToken)
       await discordClient.start()
 
       notifierClients.push(new DiscordProvider(discordClient))
@@ -88,6 +90,11 @@ const main = async () => {
       }
       console.log('Started "' + configuration.name + '" twitter client')
     }
+  }
+
+  // Add forum providers
+  if (discordClient !== undefined) {
+    forumManager.addProvider(new DiscordForum(discordClient));
   }
 
   // Start the notifier

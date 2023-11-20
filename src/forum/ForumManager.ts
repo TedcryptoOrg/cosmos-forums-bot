@@ -21,6 +21,10 @@ class ForumManager {
     }
   }
 
+  addProvider (provider: ForumProvider) {
+    this.providers[String(provider.getName())] = provider
+  }
+
   getProviders (): Record<string, ForumProvider> {
     return this.providers
   }
