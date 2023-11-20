@@ -5,6 +5,8 @@ import { Start } from '../command/Start'
 import { type CommandStructure } from '../types/CommandStructure'
 import { Platforms } from '../enums/Platforms'
 import { Stop } from '../command/Stop'
+import { Help } from '../command/Help'
+import { List } from '../command/List'
 
 export class DiscordClient implements ClientInterface {
   private readonly client: Client
@@ -25,7 +27,9 @@ export class DiscordClient implements ClientInterface {
     this.botToken = token
     this.commands = {
       start: new Start(),
-      stop: new Stop()
+      stop: new Stop(),
+      help: new Help(),
+      list: new List()
     }
   }
 

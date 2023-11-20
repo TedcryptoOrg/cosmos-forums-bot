@@ -5,6 +5,8 @@ import { Start } from '../command/Start'
 import { type CommandStructure } from '../types/CommandStructure'
 import { type Commands } from '../types/Commands'
 import { Stop } from '../command/Stop'
+import { Help } from '../command/Help'
+import { List } from '../command/List'
 
 export class TelegramClient implements ClientInterface {
   private readonly bot: Telegraf
@@ -14,7 +16,9 @@ export class TelegramClient implements ClientInterface {
     this.bot = new Telegraf(botToken)
     this.commands = {
       start: new Start(),
-      stop: new Stop()
+      stop: new Stop(),
+      help: new Help(),
+      list: new List()
     }
   }
 
@@ -42,10 +46,6 @@ export class TelegramClient implements ClientInterface {
         const result = await command.run(commandStructure)
         ctx.reply(result.message, { reply_to_message_id: ctx.update.message.message_id })
       })
-    })
-
-    this.bot.help((ctx) => {
-      ctx.reply('Use the command /start with forum provider (cosmos-forum or commonwealth) and the community name to start receiving notifications.')
     })
 
     this.bot.launch()
