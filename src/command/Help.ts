@@ -27,7 +27,7 @@ export class Help implements Command {
 
     return {
       success: true,
-      message: `Current commands:\n\n${Object.keys(commands).map((command) => `${command}: ${commands[command]}\n`).join(', ')}`
+      message: `Current commands:\n\n${Object.keys(commands).map((command) => `${command}: ${commands[command]}`).join('\n')}`
     }
   }
 }
