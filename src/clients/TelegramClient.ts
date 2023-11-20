@@ -4,6 +4,7 @@ import { Platforms } from '../enums/Platforms'
 import { Start } from '../command/Start'
 import { type CommandStructure } from '../types/CommandStructure'
 import { type Commands } from '../types/Commands'
+import { Stop } from '../command/Stop'
 
 export class TelegramClient implements ClientInterface {
   private readonly bot: Telegraf
@@ -12,7 +13,8 @@ export class TelegramClient implements ClientInterface {
   constructor (botToken: string) {
     this.bot = new Telegraf(botToken)
     this.commands = {
-      start: new Start()
+      start: new Start(),
+      stop: new Stop()
     }
   }
 
