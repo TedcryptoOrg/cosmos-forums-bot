@@ -16,7 +16,7 @@ export class CosmosForum implements ForumProvider {
   }
 
   async getArticles (): Promise<Article[]> {
-    const feedText = (await axios.get('https://forum.cosmos.network/latest.rss')).data
+    const feedText = (await axios.get('https://forum.cosmos.network/c/hub-proposals/25.rss')).data
     const feed = await this.parser.parseString(feedText)
     const feedHash = MD5(feedText).toString()
     if (feedHash === this.currentHash) {
