@@ -3,6 +3,7 @@ import { CosmosForum } from './provider/CosmosForum'
 import { type ForumProvider } from './provider/ForumProvider'
 import { MarsForum } from './provider/MarsForum'
 import { AstroPortForum } from './provider/AstroPortForum'
+import {OsmosisForum} from "./provider/OsmosisForum";
 
 class ForumManager {
   private readonly providers: Record<string, ForumProvider>
@@ -12,7 +13,8 @@ class ForumManager {
       new CommonWealth(),
       new CosmosForum(),
       new MarsForum(),
-      new AstroPortForum()
+      new AstroPortForum(),
+        new OsmosisForum(),
     ]
 
     this.providers = {}
