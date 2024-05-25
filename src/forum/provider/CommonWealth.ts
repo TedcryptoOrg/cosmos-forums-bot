@@ -68,7 +68,6 @@ export interface ApiResponse {
 export class CommonWealth implements ForumProvider {
   private readonly restToken: string | null
   private readonly communities = [
-    'osmosis',
     'stargaze',
     'juno',
     'evmos',
