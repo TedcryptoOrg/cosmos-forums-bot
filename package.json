@@ -14,7 +14,7 @@
   "repository": "https://github.com/TedcryptoOrg/cosmos-forum-bot",
   "main": "./src/index.ts",
   "dependencies": {
-    "@sentry/node": "^7.61.0",
+    "@sentry/node": "^8.0.0",
     "@sentry/tracing": "^7.61.0",
     "axios": "^1.2.5",
     "crypto-js": "^4.1.1",
