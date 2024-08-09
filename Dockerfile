@@ -1,4 +1,4 @@
-FROM node:18.20-alpine
+FROM node:20.16-alpine
 
 RUN apk upgrade --no-cache && \
     apk add --no-cache openssl libgcc libstdc++ ncurses-libs supervisor jq curl mariadb-client
